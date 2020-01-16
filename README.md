@@ -814,6 +814,7 @@ This is mostly a re-implementation of CHIP-8, but contains a crucial difference 
 
 * The stack is limited to 16 entries.
 * The memory is limited to 4K, from `000` to `FFF`.
+* The first bytes of the program were visible as ASCII characters in the HP48's file interface, and so often contain the tile of the game and author.
 
 ## Super-CHIP 1.0
 
@@ -857,7 +858,7 @@ An extension to Super-CHIP, which adds scrolling instructions. [It was announced
 
 Same as Super-CHIP 1.0, but:
 
-* `FX29` works like the regular CHIP-8 font instruction; the larger 10-byte font sprites have their own, dedicated `FX30` insutrction now
+* `FX29` works like the regular CHIP-8 font instruction; the larger 10-byte font sprites have their own, dedicated `FX30` instruction now
 * `FX55`/`FX65` no longer increment `I` at all.
 
 <h3 class="no_toc">Compatibility notes</h3>
