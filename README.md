@@ -796,7 +796,7 @@ This was perhaps the first "emulator"-like interpreter. It ran the CHIP-8 enviro
 
 ## CHIP-48
 
-Created by Andreas Gustafsson for the HP48 graphing calculators. [Posted on comp.sys.handhelds in September 1990](https://groups.google.com/d/topic/comp.sys.handhelds/zv7XZKIDS34/discussion) ([source code](https://groups.google.com/d/topic/comp.sys.handhelds/IhEF9Da2RJk/discussion).
+Created by Andreas Gustafsson for the HP48 graphing calculators. [Posted on comp.sys.handhelds in September 1990](https://groups.google.com/d/topic/comp.sys.handhelds/zv7XZKIDS34/discussion), [source code here](https://groups.google.com/d/topic/comp.sys.handhelds/IhEF9Da2RJk/discussion).
 
 This is mostly a re-implementation of CHIP-8, but contains a crucial difference in the bit shifting instructions' semantics, as well as a bug in `FX55`/`FX65`.
 
@@ -807,7 +807,7 @@ This is mostly a re-implementation of CHIP-8, but contains a crucial difference 
 <h3 class="no_toc">Altered instructions</h3>
 
 * `BNNN` is replaced by `BXNN` (see above)
-* `FX55`/`FX65` no longer increment `I` correctly (it is incremented by one less than it should; if X is 0, it is not incremented at all, [as noted in the CHIPPER assembler documentation](https://groups.google.com/forum/#!searchin/comp.sys.hp48/chip-8|sort:date/comp.sys.hp48/e7In51mOgHY/8tR3ZKeX9FUJ))
+* `FX55`/`FX65` no longer increment `I` correctly; it is incremented by one less than it should; if X is 0, it is not incremented at all, [as noted in the CHIPPER assembler documentation](https://groups.google.com/forum/#!searchin/comp.sys.hp48/chip-8|sort:date/comp.sys.hp48/e7In51mOgHY/8tR3ZKeX9FUJ)
 * `8XY6`/`8XYE` shift VX and ignore VY
 
 <h3 class="no_toc">Compatibility notes</h3>
