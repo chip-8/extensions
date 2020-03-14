@@ -597,6 +597,17 @@ In the "Hints for CHIP-8 Programmers" column, which started in the _ETI_ issue o
 
 * CHIP-8 programs are loaded at `0600` to `07FF`.
 * The resolution is 64 x 48.
+* The ETI-660 had a "standard" keyboard with the following layout:
+
+    0 1 2 3 4 5 6 7
+    8 9 A B C D E F
+
+* Many used off-the-shelf hexadecimal keypads instead, with layouts like this one:
+
+    0 1 2 3
+    4 5 6 7
+    8 9 A B
+    C D E F
 
 ## CHIP-8 with color support for ETI-660
 
