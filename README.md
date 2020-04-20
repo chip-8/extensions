@@ -531,6 +531,8 @@ The interpreter is run from a monitor program called CHIPOS, sometimes used as t
 
 <h3 class="no_toc">Altered instructions</h3>
 
+* The delay timer is decremented every frame, regardless of whether it's 0 or not; on the COSMAC VIP, it would only decrement as long as it was over 0. Its value will therefore go from 0 to 255, and any CHIP-8 game that checks if the delay timer is 0 without a busy loop will need to get lucky to get the right timing.
+* The CHIP-8 interpreter is paused while the sound beeper is playing; on the COSMAC VIP, play would continue while the beep sounded.
 * `FX0A`: As before, but if you press the additional FN key on the keypad, VX is set to `8C`. There is an audible beep when pressing a key at this instruction (not at the others).
 * `8XY3`, `8XY6`, `8XY7`, `8XYE`: The undocumented instructions for the COSMAC VIP interpreter were not implemented.
 
