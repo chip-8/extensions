@@ -531,12 +531,15 @@ The interpreter is run from a monitor program called CHIPOS, sometimes used as t
 
 <h3 class="no_toc">Altered instructions</h3>
 
-* The delay timer is decremented every frame, regardless of whether it's 0 or not; on the COSMAC VIP, it would only decrement as long as it was over 0. Its value will therefore go from 0 to 255, and any CHIP-8 game that checks if the delay timer is 0 without a busy loop will need to get lucky to get the right timing.
-* The CHIP-8 interpreter is paused while the sound beeper is playing; on the COSMAC VIP, play would continue while the beep sounded.
 * `FX0A`: As before, but if you press the additional FN key on the keypad, VX is set to `8C`. There is an audible beep when pressing a key at this instruction (not at the others).
 * `8XY3`, `8XY6`, `8XY7`, `8XYE`: The undocumented instructions for the COSMAC VIP interpreter were not implemented.
 
 <h3 class="no_toc">Compatibility notes</h3>
+
+* All `00NN` instructions where `NN` is not `E0` (erase screen) or `EE` (return) are actually no-ops (since CHIPOS uses many of the RAM addresses in the zero page for internal housekeeping, it also doesn't want to provide this memory for `0NNN` machine code subroutines), but `0000` is the no-op instruction supplied in the manual.
+* All `FXNN` instructions that didn't exist in the original CHIP-8 interpreter exit to the monitor, but `F000` is the one supplied in the manual.
+* The delay timer is decremented every frame, regardless of whether it's 0 or not; on the COSMAC VIP, it would only decrement as long as it was over 0. Its value will therefore go from 0 to 255, and any CHIP-8 game that checks if the delay timer is 0 without a busy loop will need to get lucky to get the right timing.
+* The CHIP-8 interpreter is paused while the sound beeper is playing; on the COSMAC VIP, play would continue while the beep sounded.
 
 The prototype DREAM 6800 shown on [Michael Bauer's DREAM 6800 Archive website](http://www.mjbauer.biz/DREAM6800.htm) shows the following keypad layout:
 
