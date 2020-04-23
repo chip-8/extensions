@@ -559,6 +559,21 @@ However, most DREAM computers used off-the-shelf Digitran keypads, with the foll
 
 This became the "standard" layout used by all programs in the _DREAMER_ magazine. It's also the layout used by David Fry's 40th anniversary DREAM 6800 reproduction computer.
 
+## CHIP-8 with logical operators for DREAM 6800 (CHIPOSLO)
+
+A modified version of the DREAM 6800 interpreter, with the missing four undocumented instructions added, made by Tobias V. Langhoff. [GitHub repository](https://github.com/tobiasvl/chiposlo).
+
+<h3 class="no_toc">New instructions</h3>
+
+* `8XY3`: Set VX to VX XOR VY
+* `8XY6`: Store the value of register VY shifted right one bit in register VX. Set register VF to the least significant bit prior to the shift
+* `8XY7`: Set register VX to the value of VY minus VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
+* `8XYE`: Store the value of register VY shifted left one bit in register VX. Set register VF to the most significant bit prior to the shift
+
+<h3 class="no_toc">Compatibility notes</h3>
+
+* Any non-existing `8XYN` instructions (`8XY8` through `8XYD`, plus `8XYF`) have undefined behavior and will likely crash the interpreter.
+
 ## CHIP-8 for DREAM 6800 with joystick
 
 A modification of CHIP-8/CHIPOS for the DREAM 6800 with an added joystick, described in DREAMER #3.
