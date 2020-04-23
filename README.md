@@ -541,7 +541,7 @@ The interpreter is run from a monitor program called CHIPOS, sometimes used as t
 * The delay timer is decremented every frame, regardless of whether it's 0 or not; on the COSMAC VIP, it would only decrement as long as it was over 0. Its value will therefore go from 0 to 255, and any CHIP-8 game that checks if the delay timer is 0 without a busy loop will need to get lucky to get the right timing.
 * The CHIP-8 interpreter is paused while the sound beeper is playing; on the COSMAC VIP, play would continue while the beep sounded.
 
-The prototype DREAM 6800 shown on [Michael Bauer's DREAM 6800 Archive website](http://www.mjbauer.biz/DREAM6800.htm) shows the following keypad layout:
+The prototype DREAM 6800 shown in the _Electronics Australia_ article (see [Michael Bauer's DREAM 6800 Archive website](http://www.mjbauer.biz/DREAM6800.htm)) used the following keypad layout:
 
     C D E F
     8 9 A B
@@ -550,14 +550,14 @@ The prototype DREAM 6800 shown on [Michael Bauer's DREAM 6800 Archive website](h
 
 This is also the layout used by the CHIP-8 Classic reproduction computer (see below).
 
-The DREAM 6800 assembled in Electronics Australia instead turned the layout upside down:
+However, most DREAM computers used off-the-shelf Digitran keypads, with the following layout:
 
     0 1 2 3
     4 5 6 7
     8 9 A B
     C D E F
 
-This is also the layout used by David Fry's 40th anniversary DREAM 6800 reproduction computer.
+This became the "standard" layout used by all programs in the _DREAMER_ magazine. It's also the layout used by David Fry's 40th anniversary DREAM 6800 reproduction computer.
 
 ## CHIP-8 for DREAM 6800 with joystick
 
@@ -602,12 +602,13 @@ In the "Hints for CHIP-8 Programmers" column, which started in the _ETI_ issue o
 
 * CHIP-8 programs are loaded at `0600` to `07FF`.
 * The resolution is 64 x 48.
-* The ETI-660 had a "standard" keyboard with the following layout:
+
+The ETI-660 had a "standard" keyboard with the following layout:
 
     0 1 2 3 4 5 6 7
     8 9 A B C D E F
 
-* Many used off-the-shelf hexadecimal keypads instead, with layouts like this one:
+But many used off-the-shelf hexadecimal keypads instead, with the same layout as the Digitran keypad:
 
     0 1 2 3
     4 5 6 7
