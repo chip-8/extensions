@@ -996,10 +996,14 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 
 Octo is a CHIP-8 interpreter that supports regular CHIP-8, Super-CHIP and XO-CHIP. For the most part it is compatible with those implementations.
 
+<h3 class="no_toc">New instructions</h3>
+
+* `0000`: Halts the interpreter
+
 <h3 class="no_toc">Altered instructions</h3>
 
-* `DXY0` functions as in Super-CHIP, ie. it draws a 16x16 sprite, but it does so even in low-resolution mode
-* `FX30` has large 10-byte font sprites for all the hexadecimal values from 0–F, not just 0–9
+* `DXY0`: Draws a 16x16 sprite like Super-CHIP does, but it does so even in low-resolution mode
+* `FX30`: Sets I to the address of large 10-byte font sprites for all the hexadecimal values from 0–F, not just 0–9 like Super-CHIP
 
 ## CHIP-8 Classic / Color
 
