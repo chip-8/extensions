@@ -599,7 +599,7 @@ It has several new instructions, but their usage is not very beginner-friendly; 
 
 ## CHIP-8 for ETI-660
 
-A CHIP-8 interpreter for the ETI-660 Learner's Microcomputer, detailed in [_Electronics Today International_, November 1981, page 115](https://archive.org/stream/ETIA1981/ETI%201981-11%20November#page/n114/mode/2up).
+A CHIP-8 interpreter for the ETI-660 Learner's Microcomputer, detailed in [_Electronics Today International_, November 1981, page 115](https://archive.org/stream/ETIA1981/ETI%201981-11%20November#page/n114/mode/2up). This computer was an upgraded version of the HUG1802 computer from New Zealand, of which not much is known today.
 
 Although not stated explicitly in the above source, the ETI-660 and its version of CHIP-8 in fact supported a resolution of 64 x 48.
 
