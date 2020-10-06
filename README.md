@@ -8,9 +8,9 @@ This list is mostly for historical purposes; few of the extensions listed here h
 
 ### A note on modern implementations
 
-The only CHIP-8 extensions in active use today (beyond basic CHIP-8) are Super-CHIP 1.1 and the relative newcomer XO-CHIP.
+The only CHIP-8 extensions in active use today (beyond basic CHIP-8) are SUPER-CHIP 1.1 and the relative newcomer XO-CHIP.
 
-When Super-CHIP for the HP48 calculators revived CHIP-8 in the 1990s, it introduced several incompatibilities with the original CHIP-8 interpreters from the 1970s and '80s. These incompatibilities have persisted until today, when CHIP-8 has become the de facto "Hello, world!" project for emulator developers. Even modern, basic CHIP-8 interpreters and games that do not support the Super-CHIP extensions will assume the "quirky" Super-CHIP behavior.
+When SUPER-CHIP for the HP48 calculators revived CHIP-8 in the 1990s, it introduced several incompatibilities with the original CHIP-8 interpreters from the 1970s and '80s. These incompatibilities have persisted until today, when CHIP-8 has become the de facto "Hello, world!" project for emulator developers. Even modern, basic CHIP-8 interpreters and games that do not support the SUPER-CHIP extensions will assume the "quirky" SUPER-CHIP behavior.
 
 This means that many of the original pre-1990 CHIP-8 games do not run in modern interpreters. For an overview of CHIP-8 games and their compatibility, see the CHIP-8 database project.
 
@@ -819,6 +819,10 @@ This was perhaps the first "emulator"-like interpreter. It ran the CHIP-8 enviro
 * `0000`: No operation
 * `F000`: Stop
 
+<h3 class="no_toc">Altered instructions</h3>
+
+* `FX1E`: If the result of `VX`+`I` overflows 
+
 <h3 class="no_toc">Compatibility notes</h3>
 
 * Of the undocumented instructions, `8XY6`, `8XY7` and `8XYE` are missing from the interpreter (although `8XY3` is included).
@@ -848,9 +852,9 @@ This is mostly a re-implementation of CHIP-8, but contains a crucial difference 
 * The memory is limited to 4K, from `000` to `FFF`.
 * The first bytes of the program were visible as ASCII characters in the HP48's file interface, and so often contain the tile of the game and author.
 
-## Super-CHIP 1.0
+## SUPER-CHIP 1.0
 
-Created by Erik Bryntse in 1991 for the HP48 graphing calculators, based on CHIP-48. [It was announced on comp.sci.handhelds May 16, 1991](https://groups.google.com/d/topic/comp.sys.handhelds/RuzVNccds2Q/discussion) (with [an errata](https://groups.google.com/d/topic/comp.sys.handhelds/fPUzuAkDdVs/discussion)). Also known as SUPER-CHIP, SCHIP and S-CHIP.
+Created by Erik Bryntse in 1991 for the HP 48S and HP 48SX graphing calculators, based on CHIP-48. [It was announced on comp.sci.handhelds May 16, 1991](https://groups.google.com/d/topic/comp.sys.handhelds/RuzVNccds2Q/discussion) (with [an errata](https://groups.google.com/d/topic/comp.sys.handhelds/fPUzuAkDdVs/discussion)). Also known as SCHIP and S-CHIP.
 
 Adds a high-resolution mode of 128 x 64 as well as persistent memory in the HP48's "RPL" memory.
 
@@ -871,13 +875,13 @@ Same as CHIP-48, plus:
 
 <h3 class="no_toc">Compatibility notes</h3>
 
-* In low-resolution mode (ie. the original 64 x 32), the screen memory should still be represented as 128 x 64 with each "pixel" being represented by 2 x 2 pixels. This means that switching between modes produces no visual effect, and the display is not cleared. In fact, the low-resolution mode is simply a special mode where `DXYN`'s coordinates are doubled. This has more significance in Super-CHIP 1.1.
+* In low-resolution mode (ie. the original 64 x 32), the screen memory should still be represented as 128 x 64 with each "pixel" being represented by 2 x 2 pixels. This means that switching between modes produces no visual effect, and the display is not cleared. In fact, the low-resolution mode is simply a special mode where `DXYN`'s coordinates are doubled. This has more significance in SUPER-CHIP 1.1.
 * Memory was uninitialized and random at startup.
 * The final byte is reserved, probably because of an off-by-one error, and utilizing it will crash the program.
 
-## Super-CHIP 1.1
+## SUPER-CHIP 1.1
 
-An extension to Super-CHIP, which adds scrolling instructions. [It was announced by Erik Bryntse on May 24, 1991 on comp.sys.handhelds](https://groups.google.com/forum/#!searchin/comp.sys.handhelds/super$20chip/comp.sys.handhelds/sDY9zFb6KUo/JcYBK2_yerMJ).
+An extension to SUPER-CHIP, which adds scrolling instructions. [It was announced by Erik Bryntse on May 24, 1991 on comp.sys.handhelds](https://groups.google.com/forum/#!searchin/comp.sys.handhelds/super$20chip/comp.sys.handhelds/sDY9zFb6KUo/JcYBK2_yerMJ).
 
 <h3 class="no_toc">New instructions</h3>
 
@@ -888,21 +892,59 @@ An extension to Super-CHIP, which adds scrolling instructions. [It was announced
 
 <h3 class="no_toc">Altered instructions</h3>
 
-Same as Super-CHIP 1.0, but:
+Same as SUPER-CHIP 1.0, but:
 
 * `FX29` works like the regular CHIP-8 font instruction; the larger 10-byte font sprites have their own, dedicated `FX30` instruction now
 * `FX55`/`FX65` no longer increment `I` at all.
 
 <h3 class="no_toc">Compatibility notes</h3>
 
-* As in Super-CHIP 1.0, the low-resolution (64x32) mode is simply a special mode where `DXYN`'s coordinates are doubled, and each "pixel" is represented by 2x2 on-screen pixels. This in fact means that using the instruction `00C1`, a game is able to scroll a "half-pixel" in low-resolution mode. [Read more about this here.](https://github.com/Chromatophore/HP48-Superchip/blob/master/investigations/quirk_display.md)
+* As in SUPER-CHIP 1.0, the low-resolution (64x32) mode is simply a special mode where `DXYN`'s coordinates are doubled, and each "pixel" is represented by 2x2 on-screen pixels. This in fact means that using the instruction `00C1`, a game is able to scroll a "half-pixel" in low-resolution mode. [Read more about this here.](https://github.com/Chromatophore/HP48-Superchip/blob/master/investigations/quirk_display.md)
 * In high resolution mode, `DXYN`/`DXY0` sets VF to the number of rows that either collide with another sprite or are clipped by the bottom of the screen. The original CHIP-8 interpreter only set VF to 1 if there was a collision.
 
-## Super-CHIP with scroll up
+## GCHIP
 
-In [massung's CHIP-8 emulator](https://massung.github.io/CHIP-8/), which in fact is a Super-CHIP 1.1-compatible interpreter, there is support for the extra instruction `00BN`, which scrolls up (as a mirror of the standard SCHIP `00CN` instruction for scrolling down).
+S-CHIP (SUPER-CHIP) ported to the HP 48G and HP 48GX calculator. It functions like S-CHIP, except that two S-CHIP instructions don't work due to an oversight.
 
-This instruction, which never existed in Super-CHIP, has been tracked to [trapexit's CHIP-8 documentation](https://github.com/trapexit/chip-8_documentation#opcodes). The author [does not remember where it originally came from](https://github.com/JohnEarnest/Octo/issues/68#issuecomment-338436036).
+<h3 class="no_toc">Altered instructions</h3>
+
+`FX75` and `FX85` (save and load RPL user flags) crash the interpreter.
+
+## SCHIP Compatibility (SCHPC) and GCHIP Compatibility (GCHPC)
+
+A modified version of SUPER-CHIP 1.1 that attempts to fix all the incompatibilities listed above. [Repository here, with detailed research and patches.](https://github.com/Chromatophore/HP48-Superchip)
+
+<h3 class="no_toc">New instructions</h3>
+
+Same as SCHIP 1.1.
+
+<h3 class="no_toc">Compatibility notes</h3>
+
+Unlike SCHIP 1.1, all instructions behave as they did in CHIP-8.
+
+For GHCPC: `FX75` and `FX85` now work correctly (like they did in SCHIP, and unlike GCHIP).
+
+## VIP2K CHIP-8
+
+A CHIP-8 interpreter for the [VIP2K](http://www.sunrise-ev.com/vip2k.htm), a 40th anniversary reproduction of the COSMAC VIP computer. [Manual for the VIP2K CHIP-8 interpreter.](http://www.sunrise-ev.com/photos/1802/Chip8interpreter.pdf)
+
+<h3 class="no_toc">New instructions</h3>
+
+* `00NN`: Call 1802 machine language routine at address `70NN` (rather than `80NN` like `0NNN` does)
+
+<h3 class="no_toc">Altered instructions</h3>
+
+* The instruction `00NN`
+
+<h3 class="no_toc">Compatibility notes</h3>
+
+* CHIP-8 programs are loaded from `8200`. All memory-related instructions are relative to the memory at `8000`.
+
+## SUPER-CHIP with scroll up
+
+In [massung's CHIP-8 emulator](https://massung.github.io/CHIP-8/), which in fact is a SUPER-CHIP 1.1-compatible interpreter, there is support for the extra instruction `00BN`, which scrolls up (as a mirror of the standard SCHIP `00CN` instruction for scrolling down).
+
+This instruction, which never existed in SUPER-CHIP, has been tracked to [trapexit's CHIP-8 documentation](https://github.com/trapexit/chip-8_documentation#opcodes). The author [does not remember where it originally came from](https://github.com/JohnEarnest/Octo/issues/68#issuecomment-338436036).
 
 See also [XO-CHIP](#xo-chip) below, which adds this same instruction with the opcode `00DN` instead.
 
@@ -918,18 +960,6 @@ A Linux interpreter by Peter Miller, created as part of the chip8 package. It su
 
 * `001N`: Exit interpreter with the exit status N
 * `00FA`: Set compatibility mode for `FX55` and `FX65`; running this changes the behavior of those instructions so they no longer change `I`
-
-## SCHIP Compatibility (SCHPC)
-
-A modified version of Super-CHIP 1.1 that attempts to fix all the incompatibilities listed above. [Repository here, with detailed research and patches.](https://github.com/Chromatophore/HP48-Superchip)
-
-<h3 class="no_toc">New instructions</h3>
-
-Same as SCHIP 1.1.
-
-<h3 class="no_toc">Compatibility notes</h3>
-
-Unlike SCHIP 1.1, all instructions behave as they did in CHIP-8.
 
 ## Mega-Chip
 
@@ -994,7 +1024,7 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 
 ## Octo
 
-Octo is a CHIP-8 interpreter that supports regular CHIP-8, Super-CHIP and XO-CHIP. For the most part it is compatible with those implementations.
+Octo is a CHIP-8 interpreter that supports regular CHIP-8, SUPER-CHIP and XO-CHIP. For the most part it is compatible with those implementations.
 
 <h3 class="no_toc">New instructions</h3>
 
@@ -1002,8 +1032,8 @@ Octo is a CHIP-8 interpreter that supports regular CHIP-8, Super-CHIP and XO-CHI
 
 <h3 class="no_toc">Altered instructions</h3>
 
-* `DXY0`: Draws a 16x16 sprite like Super-CHIP does, but it does so even in low-resolution mode
-* `FX30`: Sets I to the address of large 10-byte font sprites for all the hexadecimal values from 0–F, not just 0–9 like Super-CHIP
+* `DXY0`: Draws a 16x16 sprite like SUPER-CHIP does, but it does so even in low-resolution mode
+* `FX30`: Sets I to the address of large 10-byte font sprites for all the hexadecimal values from 0–F, not just 0–9 like SUPER-CHIP
 
 ## CHIP-8 Classic / Color
 
