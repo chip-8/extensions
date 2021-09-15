@@ -1002,12 +1002,13 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 
 <h3 class="no_toc">New instructions</h3>
 
+* `00DN`: Scroll up N pixels
 * `5XY2`: Save VX..VY to memory starting at I (same as CHIP-8E); order can be ascending or descending; does not increment I
 * `5XY3`: Load VX..VY from memory starting at I (same as CHIP-8E); order can be ascending or descending; does not increment I
 * `F000 NNNN`: Load I with 16-bit address NNNN
 * `FN01`: Select drawing planes by bitmask (0 planes, plane 1, plane 2 or both planes (3))
 * `F002`: Store 16 bytes in audio pattern buffer, starting at I, to be played by the sound buzzer
-* `00DN`: Scroll up N pixels
+* `FX3A`: Set the pitch register to the value in `VX`.
 
 <h3 class="no_toc">Altered instructions</h3>
 
@@ -1018,9 +1019,13 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 <h3 class="no_toc">Compatibility notes</h3>
 
 * Switching resolution mode erases the screen, unlike on SCHIP.
-* Audio patterns are a series of 1-bit samples played at 4000 samples per second.
+* Audio patterns are a series of 1-bit samples played at a rate of 4000*2^((`pitch`-64)/48) Hertz, or samples per second, where `pitch` is the pitch register.
+* The pitch register is initialized to 48, making the default sample rate 4000 Hz.
+audio pattern playback rate to 4000*2^((`VX`-64)/48)Hz.
 * The audio pattern buffer is restricted to 16 bytes in Octo.
 * The audio pattern buffer is not necessarily cleared on program start, although Octo does so.
+* The audio pattern buffer is loaded when `F002` is called. Subsequent rewrites of the memory that `I` pointed to at that time are not reflected in the buffer.
+* In Octo, 
 
 ## Octo
 
