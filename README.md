@@ -1015,6 +1015,8 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 * Skip instructions will skip over the entire double-wide `F000 NNNN` instruction.
 * Clear, scroll and draw instructions only apply to the selected drawing plane.
 * `00FE` and `00FF`, which switch between low and high resolution, will clear the screen as well.
+* `FX75`: As in SUPER-CHIP, store V0..VX in RPL user flags, but X is not limited to 7
+* `FX85`: As in SUPER-CHIP, read V0..VX from RPL user flags, but X is not limited to 7
 
 <h3 class="no_toc">Compatibility notes</h3>
 
@@ -1025,7 +1027,6 @@ audio pattern playback rate to 4000*2^((`VX`-64)/48)Hz.
 * The audio pattern buffer is restricted to 16 bytes in Octo.
 * The audio pattern buffer is not necessarily cleared on program start, although Octo does so.
 * The audio pattern buffer is loaded when `F002` is called. Subsequent rewrites of the memory that `I` pointed to at that time are not reflected in the buffer.
-* In Octo, 
 
 ## Octo
 
