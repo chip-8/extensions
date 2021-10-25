@@ -788,7 +788,7 @@ Finally, there was also a CHIP-8/BASIC integration, with a "compiler"/"decompile
 * `FXY6`: Set VX/VY to display coincidence coordinates; the _first_ screen coordinates where a collision occured during the _last_ display instruction that caused a collision
 * `FXYB`: Limit joystick range to VX/VY
 * `FXYC`: Read joystick movement; a joystick movement horizontally or vertically will increment or decrement VX or VY, and the status of the fire button will set VF to 1 or 0
-* `FXYD`: Display ASCII string starting at I, at VX/VY; string can contain characters in the range 20–7E plus CR and LF, and are terminated by EOT. The sequence "|XA" will repeat the A character X+1 times (1–40). Wraps around the screen like `DXYN`. Will continue to operate past a Data Page, but does not alter the Page Buffer.
+* `FXYD`: Display ASCII string starting at I, at VX/VY; string can contain characters in the range 20–7E plus CR and LF, and are terminated by EOT. The sequence "\|XA" will repeat the A character X+1 times (1–40). Wraps around the screen like `DXYN`. Will continue to operate past a Data Page, but does not alter the Page Buffer.
 * `FXYF`/`FXY0`: No operation, but reserved for future color expansions
 
 <h3 class="no_toc">Altered instructions</h3>
@@ -810,7 +810,7 @@ Finally, there was also a CHIP-8/BASIC integration, with a "compiler"/"decompile
 
 ## Amiga CHIP-8 interpreter
 
-The CHIP-8 interpreter for the Commodore Amiga was first released in 1990 by Paul Hayter. It was inspired by the DREAM 6800 interpreter, and als included a similar monitor program (called "DREAM Mon") to input and run programs.
+The CHIP-8 interpreter for the Commodore Amiga was first released in 1990 by Paul Hayter. It was inspired by the DREAM 6800 interpreter, and also included a similar monitor program (called "DREAM Mon") to input and run programs.
 
 This was perhaps the first "emulator"-like interpreter. It ran the CHIP-8 environment in a virtual machine, simulating the memory instead of using actual, mapped memory.
 
@@ -828,7 +828,6 @@ This was perhaps the first "emulator"-like interpreter. It ran the CHIP-8 enviro
 * Of the undocumented instructions, `8XY6`, `8XY7` and `8XYE` are missing from the interpreter (although `8XY3` is included).
 * The sound timer was not yet implemented in version 1.1, which is the version that seems to be available online.
 * CHIP-8 programs were saved in `.c8` files. A filename that ended in `2.c8` indicated that it should be loaded from `0200` (like games for the COSMAC VIP or DREAM 6800); if it ended in `6.c8` it should be loaded from `0600` (like the ETI-660).
-* 
 
 ## CHIP-48
 
@@ -843,14 +842,14 @@ This is mostly a re-implementation of CHIP-8, but contains a crucial difference 
 <h3 class="no_toc">Altered instructions</h3>
 
 * `BNNN` is replaced by `BXNN` (see above)
-* `FX55`/`FX65` no longer increment `I` correctly; it is incremented by one less than it should; if X is 0, it is not incremented at all, [as noted in the CHIPPER assembler documentation](https://groups.google.com/forum/#!searchin/comp.sys.hp48/chip-8|sort:date/comp.sys.hp48/e7In51mOgHY/8tR3ZKeX9FUJ)
+* `FX55`/`FX65` no longer increment `I` correctly; it is incremented by one less than it should. If X is 0, it is not incremented at all, [as noted in the CHIPPER assembler documentation](https://groups.google.com/forum/#!searchin/comp.sys.hp48/chip-8\|sort:date/comp.sys.hp48/e7In51mOgHY/8tR3ZKeX9FUJ)
 * `8XY6`/`8XYE` shift VX and ignore VY
 
 <h3 class="no_toc">Compatibility notes</h3>
 
 * The stack is limited to 16 entries.
 * The memory is limited to 4K, from `000` to `FFF`.
-* The first bytes of the program were visible as ASCII characters in the HP48's file interface, and so often contain the tile of the game and author.
+* The first 17 bytes of the program were visible as ASCII charactersi (actually, [a modified Latin-1](https://www.drehersoft.com/mapping-hp48-text-to-unicode/)) in the HP48's interface, and so often contain a jump (ie. the two bytes `12NN`, displayed as two block characters) followed by the title of the game and sometimes the author.
 
 ## SUPER-CHIP 1.0
 
@@ -1022,11 +1021,12 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 
 * Switching resolution mode erases the screen, unlike on SCHIP.
 * Audio patterns are a series of 1-bit samples played at a rate of 4000*2^((`pitch`-64)/48) Hertz, or samples per second, where `pitch` is the pitch register.
-* The pitch register is initialized to 48, making the default sample rate 4000 Hz.
+* The pitch register is initialized to 64, making the default sample rate 4000 Hz.
 audio pattern playback rate to 4000*2^((`VX`-64)/48)Hz.
 * The audio pattern buffer is restricted to 16 bytes in Octo.
 * The audio pattern buffer is not necessarily cleared on program start, although Octo does so.
 * The audio pattern buffer is loaded when `F002` is called. Subsequent rewrites of the memory that `I` pointed to at that time are not reflected in the buffer.
+* The playback offset of the audio pattern buffer only resets when the sound timer reaches 0 (either by itself, or by being set explicitly).
 
 ## Octo
 
@@ -1040,6 +1040,10 @@ Octo is a CHIP-8 interpreter that supports regular CHIP-8, SUPER-CHIP and XO-CHI
 
 * `DXY0`: Draws a 16x16 sprite like SUPER-CHIP does, but it does so even in low-resolution mode
 * `FX30`: Sets I to the address of large 10-byte font sprites for all the hexadecimal values from 0–F, not just 0–9 like SUPER-CHIP
+
+<h3 class="no_toc">Compatibility notes</h3>
+
+* Switching resolution mode erases the screen, like XO-CHIP dictates, but Octo does so even with SCHIP games.
 
 ## CHIP-8 Classic / Color
 
