@@ -29,6 +29,7 @@ The list builds on these modern documents, in addition to historical sources:
 * [CHIP‐8 Extensions Reference](https://github.com/mattmikolay/chip-8/wiki/CHIP%E2%80%908-Extensions-Reference)
 * [SCHIP Compatibility](https://github.com/Chromatophore/HP48-Superchip)
 * [xChip manual](https://github.com/mehcode/xchip/blob/master/docs/manual.md)
+* [HWC-64 Docs](https://github.com/NinjaWeedle/HyperWaveCHIP-64)
 
 ### Commonalities and notation
 
@@ -1057,6 +1058,34 @@ Octo is a CHIP-8 interpreter that supports regular CHIP-8, SUPER-CHIP and XO-CHI
 <h3 class="no_toc">Compatibility notes</h3>
 
 * Switching resolution mode erases the screen, like XO-CHIP dictates, but Octo does so even with SCHIP games.
+
+## HyperWaveCHIP-64
+
+An extension for XO-CHIP 1.1 created by Oxiti8 in 2021.
+
+HWC-64 allows easier access 
+
+Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, which supports "macros" for comparison operators (less than (or equal), greater than (or equal)) but which assemble down to regular CHIP-8 bytecode instead of dedicated instructions.
+
+<h3 class="no_toc">New instructions</h3>
+
+* `00E1`: INVERT - NOT the contents of the the currently selected bit plane.
+* `00F1`: OR MODE - Enable OR mode drawing. (Pixels are not erased during DXYN if collision. VF is still set to 1 if collision and 0 otherwise)
+* `00F2`: ERASE MODE - Enable ERASE mode drawing. (Only erases pixels during DXYN if collision. VF is still set to 1 if collision and 0 otherwise)
+* `00F3`: XOR MODE - Enable XOR mode drawing. (XOR is the default drawing mode.)
+* `5XY1`: SKIP VX > VY - Skip if VX > VY. Will also double skip over the `F000`, `F100`, `F200`, and `F300` instructions like other skip instructions. Inherited from CHIP8E.
+* `F100 NNNN`: Long Jump - Load PC with 16-bit address NNNN
+* `F200 NNNN`: Long call - Store current PC in stack, then Load PC with 16-bit address NNNN
+* `F300 NNNN`: Long Jump + V0 - Store current PC in stack, then Load PC with 16-bit address NNNN + V0
+* `FN03`:  Palette swap - Set RGB8 color used for plane # N to 24-bit (3-byte) RGB8 color palette located at I in memory
+
+<h3 class="no_toc">Altered instructions</h3>
+
+* Skip instructions that double skip over `F000` in XO-CHIP will also double skip over `F100`, `F200`, and `F300`.
+
+<h3 class="no_toc">Compatibility notes</h3>
+
+* Draw mode is set to XOR by default.
 
 ## CHIP-8 Classic / Color
 
