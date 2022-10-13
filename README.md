@@ -966,30 +966,43 @@ A superset of SCHIP created by Revival Studios in 2007.
 
 - CLS will be used for timing/flipping/noflickering purpose
 - Emulationspeed/Num.ticks per frame will be fixed (1000 ticks????) OR timed to CLS
-- LDHI I,nnnnnnn instruction allows 24-bit adressing, always follow LDHI by a NOP instruction.
-- LDPAL Will load 32-bit colors to an internal mchip8 pallete at position 1. 
+- LDHI I,nnnnnnn instruction allows 24-bit addressing
+- LDPAL Will load 32-bit colors to an internal mchip8 palette at position 1. 
   Color 0 is always black/transparent.
 - SPRW/SPRH can be 0..255 , use 0 for a width/height of 256 
 - SPRW/SPRH will overwrite n-setting for non-character sprites.
-- ALPHA/FADE will effect the fade-factor of the screenbuffer (0..255)
+- ALPHA/FADE are supposed to affect fade-factor of the screenbuffer (0..255) 
 
 <h3 class="no_toc">New instructions</h3>
 
 * `0010`: Disable Megachip mode
 * `0011`: Enable Megachip mode
-* `01NN`: Load I with NN concatenated with the next byte
-* `02NN`: Load NN-colors palette at I
+* `01NN NNNN`: Load 24-bit pointer into I with NN concatenated with the next byte, increment PC by 2
+* `02NN`: Load NN-colors ARGB8 palette located at I (palettes are 4 bytes each and are stored sequentially in memory)
 * `03NN`: Set sprite width to NN
 * `04NN`: Set sprite height to NN
 * `05NN`: Set screen alpha to NN
-* `060N`: Play sound at I, loop if N
+* `060N`: Play sound at I (N is ignored for some reason), first two bytes are for the frequency, next 3 bytes is the size
 * `0700`: Stop sound
-* `080N`: Set sprite blend mode to N (0=normal,1=25%,2=50%,3=75%,4=addative,5=multiply)
+* `080N`: Set sprite blend mode to N (0=normal,1=25%,2=50%,3=75%,4=additive,5=multiply)
+* `09NN`: Set Collision Color to NN 
 * `00BN`: Scroll display N pixels up
 
 <h3 class="no_toc">Altered instructions</h3>
 
-Same as SCHIP
+Same as SCHIP except `BNNN` jumps properly, and:
+
+* `DXYN` is completely different in MegaChip mode, using SPRH/SPRW for Sprite height and width and ignoring N, using a byte per pixel as opposed to a bit per pixel, always overwriting the contents of the screen buffer rather than XORing, and only setting VF if the value of the pixel about to be overwritten is equal to the Collision Color value set by 09NN. Supposedly "non-character" sprites don't use this special DXYN?
+* `00FE` and `00FF` do not work properly in MegaChip mode
+* `00EE` is the only instruction that actually updates the screen while MegaChip mode is active, and clears the screen buffer as normal after updating
+
+<h3 class="no_toc">Compatibility notes</h3>
+
+* `009N` is undocumented
+* `05NN` does not actually do anything in the Megachip emulator and is effectively a NOP
+* While `01NN` is very similar to XO-CHIP's long I, skip instructions don't actually double skip over it- however, using double skipping is acceptable as the devkit mentions that the NNNN portion should always be a NOP anyway
+* Setting Sprite Width or Sprite Height to 0 with `03NN` or `04NN` will set the value of Sprite Width or Sprite Height to 256- this is commonly used to fill the entire background with a sprite.
+* `00BN` is functionally identical to XO-CHIP's `00DN`
 
 ## XO-CHIP
 
