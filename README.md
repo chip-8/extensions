@@ -994,7 +994,7 @@ A superset of SCHIP created by Revival Studios in 2007.
 Same as SCHIP except:
 
 * `BNNN` uses VIP behavior (NNN+V0) instead of the bugged SCHIP behavior (VX+XNN)
-* `DXYN` is completely different in MegaChip mode, using SPRH/SPRW for Sprite height and width and ignoring N, using a byte per pixel as opposed to a bit per pixel, always overwriting the contents of the screen buffer rather than XORing, and only setting VF if the value of the pixel about to be overwritten is equal to the Collision Color value set by 09NN. If I is pointing to a non-character sprite (the built in font data), the normal DXYN behavior is used instead. 
+* `DXYN` is completely different in MegaChip mode, using SPRH/SPRW for Sprite height and width and ignoring N, using a byte per pixel as opposed to a bit per pixel, always overwriting the contents of the screen buffer rather than XORing, and only setting VF if the value of the pixel about to be overwritten is equal to the Collision Color value set by 09NN. If I is pointing to a non-character sprite (the built in font data), the normal DXYN behavior is used instead. Wrapping on the Y axis actually occurs at Row 256 and not Row 192.
 * `00FE` and `00FF` do not work properly in MegaChip mode
 * `00EE` is the only instruction that actually updates the screen while MegaChip mode is active, and clears the screen buffer as normal after updating
 
@@ -1075,6 +1075,9 @@ Note that XO-CHIP is mainly supported by John Earnest's own Octo assembler, whic
 * `00F2`: ERASE MODE - Enable ERASE mode drawing. (Only erases pixels during DXYN if collision. VF is still set to 1 if collision and 0 otherwise)
 * `00F3`: XOR MODE - Enable XOR mode drawing. (XOR is the default drawing mode.)
 * `5XY1`: SKIP VX > VY - Skip if VX > VY. Will also double skip over the `F000`, `F100`, `F200`, and `F300` instructions like other skip instructions. Inherited from CHIP8E.
+* `8XYC`: MULT VX, VY - Set VX to VX * VY. Set VF to higher 8 bits of the product, and set VX to  (result of the multiplication % 256). If the result is below 256, set VF to 0.
+* `8XYD`: DIV VX, VY - VX = VX // VY. VF = VX % VY. If VY = 0 at the start of the opcode, set BOTH VX and VF to 0. Prevents division by zero.
+* `8xyF`: DIV VX, VY - VX = vY // vX. VF = vY % vX. If VX = 0 at the start of the opcode, set BOTH VX and VF to 0. Prevents division by zero.
 * `F100 NNNN`: Long Jump - Load PC with 16-bit address NNNN
 * `F200 NNNN`: Long call - Store current PC in stack, then Load PC with 16-bit address NNNN
 * `F300 NNNN`: Long Jump + V0 - Store current PC in stack, then Load PC with 16-bit address NNNN + V0
