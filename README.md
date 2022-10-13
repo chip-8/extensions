@@ -991,11 +991,13 @@ A superset of SCHIP created by Revival Studios in 2007.
 
 <h3 class="no_toc">Altered instructions</h3>
 
-Same as SCHIP except `BNNN` jumps properly, and:
+Same as SCHIP except:
 
-* `DXYN` is completely different in MegaChip mode, using SPRH/SPRW for Sprite height and width and ignoring N, using a byte per pixel as opposed to a bit per pixel, always overwriting the contents of the screen buffer rather than XORing, and only setting VF if the value of the pixel about to be overwritten is equal to the Collision Color value set by 09NN. Supposedly "non-character" sprites don't use this special DXYN?
+* `BNNN` uses VIP behavior (NNN+V0) instead of the bugged SCHIP behavior (VX+XNN)
+* `DXYN` is completely different in MegaChip mode, using SPRH/SPRW for Sprite height and width and ignoring N, using a byte per pixel as opposed to a bit per pixel, always overwriting the contents of the screen buffer rather than XORing, and only setting VF if the value of the pixel about to be overwritten is equal to the Collision Color value set by 09NN. If I is pointing to a non-character sprite (the built in font data), the normal DXYN behavior is used instead. 
 * `00FE` and `00FF` do not work properly in MegaChip mode
 * `00EE` is the only instruction that actually updates the screen while MegaChip mode is active, and clears the screen buffer as normal after updating
+* `FX30` is missing from the original MegaChip emulator.
 
 <h3 class="no_toc">Compatibility notes</h3>
 
