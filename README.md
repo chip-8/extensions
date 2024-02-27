@@ -103,7 +103,7 @@ The instructions `8XY3`, `8XY6`, `8XY7` and `8XYE` were all part of the interpre
 
 * The original CHIP-8 interpreter occupied the first 512 bytes of memory, loading in CHIP-8 programs starting at memory location `0200`.
 * The execution of a CHIP-8 program did in fact start at `01FC`, executing the following two machine code instructions located at the end of the interpreter: `00E0` (clear screen) and `004B` (turn the display on). These were both machine code routines.
-* The final 352 bytes of memory were reserved for "variables and screen refresh" (ie. the CHIP-8 "registers", stack and a frame buffer). On a COSMAC VIP with 2048 bytes of RAM, this means addresses `0700` to `07FF` were reserved; with 4096 bytes of RAM, `0E90` to `0FFF` were reserved.
+* The final 352 bytes of memory were reserved for "variables and screen refresh" (ie. the CHIP-8 "registers", stack and a frame buffer). On a COSMAC VIP with 2048 bytes of RAM, this means addresses `06A0` to `07FF` were reserved; with 4096 bytes of RAM, `0E9E` to `0FFF` were reserved.
 * The original interpreter supports 12 stack entries.
 * `DXYN` waits for the display interrupt/vertical blanking period before drawing to the screen. This slows down execution, but eliminates sprite tearing.
 * `DXYN` does a modulo of the values in VX and VY before drawing, meaning that it wraps sprites that would be drawn in their entirety outside of the display area.
